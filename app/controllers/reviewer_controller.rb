@@ -1,0 +1,2 @@
+class ReviewerController < ApplicationController
+end
