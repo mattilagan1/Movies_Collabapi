@@ -1,6 +1,6 @@
 class ReviewerController < ApplicationController
-  validates :send_username, only: [:create]
-  validates :set_name, only: [:show, :update, :destroy]
+  after_action :send_username, only: [:create]
+  before_action :set_name, only: [:show, :update, :destroy]
 
   def index
     @reviewers = Reviewer.all

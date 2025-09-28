@@ -1,6 +1,6 @@
 class ReviewController < ApplicationController
-  validates :send_comment, only: [:create]
-  validates :set_review, only: [:show, :update, :destroy]
+  after_action :send_comment, only: [:create]
+  before_action :set_review, only: [:show, :update, :destroy]
 
   def index
     @reviews = Review.all

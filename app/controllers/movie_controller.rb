@@ -1,6 +1,6 @@
 class MovieController < ApplicationController
-  validates :send_genre, only: [:create]
-  validates :set_movie, only: [:show, :update, :destroy]
+  after_action :send_genre, only: [:create]
+  before_action :set_movie, only: [:show, :update, :destroy]
 
   def index
     @movies = Movie.all
@@ -50,5 +50,23 @@ class MovieController < ApplicationController
 
   def set_movie
     @movie = Movie.find(params[:id])
+  end
+
+  # Making it say movies first, then reviewer, and lastly the review 
+  def show
+    movie = Movie.includes(reviews: :reviewer).find(params[:id])
+    render json: movie.as_json(
+    only: [:id, :title, :genre],
+    include: {
+      reviewers: {
+        only: [:id, :name, :username],
+        include: {
+          reviews: {
+            only: [:id, :rating, :comment]
+          }
+        }
+      }
+    }
+  )
   end
 end
