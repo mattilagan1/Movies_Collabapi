@@ -1,20 +1,54 @@
 class ReviewerController < ApplicationController
-  def index
-    reviewers = Reviewer.all
+  validates 
+  validates 
 
-    render json: reviewers
+  def index
+    @reviewers = Reviewer.all
+
+    render json: @reviewers
+  end
+
+  def show
+    render json: @reviewer
   end
 
   def create
-    reviewers = Reviewer.new(
+    @reviewer = Reviewer.new(
       name: params[:name],
       username: params[:username]
     )
 
     if reivewer.save
-      render json: movies
+      render json: @reviewer
     else
-      render json: movies.errors, status: :unprocessable_entity
+      render json: @reviewer.errors, status: :unprocessable_entity
     end
+  end
+
+  def update
+    @reviewer.update(
+      name: params[:name] || @reviewer.name,
+      username: params[:username] || @reviewer.username
+    )
+
+    render json: @reviewer
+  end
+
+  def destroy
+    @reviewer.destroy
+
+    render json: { message: "Reviewer was deleted,,,," }
+  end
+
+  private
+
+  def send_username
+    puts "---------------"
+    outs "Mimicing sending a username...."
+    puts "---------------"
+  end
+
+  def set_name
+    @reviewer = Reviewer.find(params[:id])
   end
 end
