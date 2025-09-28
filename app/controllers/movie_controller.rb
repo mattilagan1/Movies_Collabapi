@@ -49,6 +49,6 @@ class MovieController < ApplicationController
   end
 
   def set_movie
-    @movie = Movie.findO(params[:id])
+    @movie = Movie.find(params[:id])
   end
 end

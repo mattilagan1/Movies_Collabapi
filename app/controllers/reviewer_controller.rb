@@ -1,6 +1,6 @@
 class ReviewerController < ApplicationController
-  validates 
-  validates 
+  validates :send_username, only: [:create]
+  validates :set_name, only: [:show, :update, :destroy]
 
   def index
     @reviewers = Reviewer.all
@@ -44,7 +44,7 @@ class ReviewerController < ApplicationController
 
   def send_username
     puts "---------------"
-    outs "Mimicing sending a username...."
+    puts "Mimicing sending a username...."
     puts "---------------"
   end
 
