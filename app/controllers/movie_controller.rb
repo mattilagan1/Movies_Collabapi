@@ -6,11 +6,15 @@ class MovieController < ApplicationController
   end
 
   def create
-    movies = Movie.create(
+    movies = Movie.new(
       title: params[:title], 
       genre: params[:genre]
     )
 
-    render json: movies
+    if movie.save
+      render json: movies
+    else
+      render json: movies.errors, status: :unprocessable_entity
+    end
   end
 end
